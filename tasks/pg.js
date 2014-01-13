@@ -34,7 +34,7 @@ module.exports = function(grunt) {
   // Please see the grunt documentation for more information regarding task
   // creation: https://github.com/gruntjs/grunt/blob/devel/docs/toc.md
 
-  var _ = grunt.utils._;
+  var _ = grunt.util._;
 
   grunt.registerMultiTask('pgcreateuser', 'Add a new Postgres user.', function() {
       var self = this;
