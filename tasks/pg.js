@@ -126,6 +126,9 @@ module.exports = function(grunt) {
         " -f " + data.filename;
 
       exec( grunt.template.process(command), data.execOptions, function( err, stdout, stderr ) {
+          if(!err && stderr && stderr.length > 0)
+            err = stderr;
+            
           if ( stdout ) {
               if ( _.isFunction( dataOut ) ) {
                   dataOut( stdout );
