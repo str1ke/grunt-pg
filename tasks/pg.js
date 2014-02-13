@@ -116,7 +116,7 @@ module.exports = function(grunt) {
       }
 
       var db = data.connection;
-      var command = (db.password ? "PGPASSWORD='" + db.password + "'" : "") +
+      var command = (db.password ? "PGPASSWORD=" + db.password + "" : "") +
         " psql " +
         " -d " + db.name +
         (db.host ? " -h " + db.host : "" ) +
