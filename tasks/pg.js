@@ -6,6 +6,7 @@
  * Written by Andrew Chilton.
  * Licensed under the MIT license.
  */
+'use strict';
 
 var pg = require('pg');
 
@@ -69,7 +70,7 @@ module.exports = function(grunt) {
 
       // do DB name and owner here:
       // * http://www.postgresql.org/docs/8.1/static/sql-createdatabase.html
-      var stmt = 'CREATE DATABASE ' + data.name;
+      var stmt = 'CREATE DATABASE "' + data.name + '"';
       if ( data.owner ) {
           stmt += ' WITH OWNER ' + data.owner;
       }
@@ -85,7 +86,7 @@ module.exports = function(grunt) {
       var data = self.data;
       var done = self.async();
 
-      var stmt = "ALTER DATABASE " + data.name + " OWNER TO " + data.owner;
+      var stmt = 'ALTER DATABASE "' + data.name + '" OWNER TO ' + data.owner;
       execute_db(data.connection, stmt, function(err, res) {
           grunt.log.writeln('Database "' + data.name + '" created.');
           done();
@@ -97,7 +98,7 @@ module.exports = function(grunt) {
       var done = this.async();
       var data = this.data;
 
-      execute_db(data.connection, "DROP DATABASE IF EXISTS " + data.name + ";", function(err, res) {
+      execute_db(data.connection, 'DROP DATABASE IF EXISTS "' + data.name + '";', function(err, res) {
           grunt.log.writeln('Database "' + data.name + '" dropped.');
           done();
       });
@@ -126,9 +127,10 @@ module.exports = function(grunt) {
         " -f " + data.filename;
 
       exec( grunt.template.process(command), data.execOptions, function( err, stdout, stderr ) {
-          if(!err && stderr && stderr.indexOf('ERROR') != -1)
+          if(!err && stderr && stderr.indexOf('ERROR') !== -1) {
             err = stderr;
-            
+          }
+
           if ( stdout ) {
               if ( _.isFunction( dataOut ) ) {
                   dataOut( stdout );

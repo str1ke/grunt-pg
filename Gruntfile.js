@@ -5,6 +5,7 @@
  * Copyright (c) 2013 Moneytribe
  * Licensed under the MIT license.
  */
+'use strict';
 
 module.exports = function(grunt) {
 
